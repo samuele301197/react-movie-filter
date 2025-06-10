@@ -10,17 +10,18 @@ const FilmList = () => {
 ];
 
 const [search, setSearch] = useState("");
+const [title, setTitle] = useState("");
 const [films, setFilms] = useState(showFilms);
 
 useEffect(() => {
     const filmFilter = showFilms.filter(film => 
-        film.genre.toLowerCase().includes(search.toLowerCase())
+        film.genre.toLowerCase().includes(search.toLowerCase()) &&
+        film.title.toLowerCase().includes(title.toLowerCase())
     );
     setFilms(filmFilter); },
 
-[search]
+[search, title]
 );
-
 
 return(
     <>
@@ -38,13 +39,19 @@ return(
         <ul className="list-group my-5">
             {films.map((curFilm, index) => (
                 <li key= {index} className="list-group-item">
-                    {curFilm.title}
+                    <strong>{curFilm.title}</strong> - {curFilm.genre}
                 </li>
             ))}
         </ul>
-        <form>
-
-        </form>
+         <form className="my-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Cerca un titolo..."
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+        />
+      </form>
     </div>
     </>
 );
